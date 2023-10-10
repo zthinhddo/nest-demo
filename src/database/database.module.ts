@@ -1,7 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/user/entities/user.entity';
 
+// @Module({
+//   imports: [
+//     TypeOrmModule.forRoot({
+//       type: 'postgres',
+//       host: 'localhost',
+//       port: 5432,
+//       username: 'postgres',
+//       password: '123',
+//       database: 'herowarudo',
+//       entities: [User], // TODO: remove User, let autoLoadEntitites does the work
+//       autoLoadEntities: true,
+//     }),
+//   ],
+// })
+
+// TODO: Rework this. Access env to create module TypeORM datasource
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
