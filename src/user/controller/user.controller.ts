@@ -1,26 +1,31 @@
-import { Body, Controller, Get, Inject, Post, Query } from "@nestjs/common";
-import { CreateUserDto } from "../dtos/user.dto";
-import { IUser, USER_SERVICE } from "../interfaces/user.interface";
-import { User } from "../entities/user.entity";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { User } from '../entities/user.entity';
+import { IUser, USER_SERVICE } from '../interfaces/user.interface';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 @ApiTags('user')
 @Controller('users')
 export class UserController {
-    constructor(@Inject(USER_SERVICE) private readonly _userService: IUser) {}
+  constructor(@Inject(USER_SERVICE) private readonly _userService: IUser) {}
 
-    @Post('new')
-    createUser(@Body() userDto: CreateUserDto): Promise<User> {
-       return this._userService.createUser(userDto);
-    }
+  @Post('new/:roleId')
+  createUser(@Body() userDto: CreateUserDto, @Param('roleId') roleId: string): Promise<User | null> {
+    return this._userService.createUser(userDto, roleId);
+  }
 
-    @Get()
-    getUsers(): Promise<User[]> {
-        return this._userService.getUser();
-    }
+  @Post('modify/:userId')
+  updateUser(@Body() userDto: UpdateUserDto, @Param('userId') userId: string): Promise<User | null> {
+    return this._userService.updateUser(userDto, userId);
+  }
 
-    @Get(':usrId')
-    getUserById(@Query('usrId') usrId: string): Promise<User | null> {
-        return this._userService.getUserById(usrId);
-    }
+  @Get()
+  getUsers(): Promise<User[]> {
+    return this._userService.getUser();
+  }
+
+  @Get(':usrId')
+  getUserById(@Param('usrId') usrId: string): Promise<User | null> {
+    return this._userService.getUserById(usrId);
+  }
 }

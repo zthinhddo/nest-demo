@@ -1,22 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Role } from 'src/role/entities/role.entity';
 import { User } from 'src/user/entities/user.entity';
+import { UserRole } from 'src/usr_role/entities/usr_role.entity';
 
-// @Module({
-//   imports: [
-//     TypeOrmModule.forRoot({
-//       type: 'postgres',
-//       host: 'localhost',
-//       port: 5432,
-//       username: 'postgres',
-//       password: '123',
-//       database: 'herowarudo',
-//       entities: [User], // TODO: remove User, let autoLoadEntitites does the work
-//       autoLoadEntities: true,
-//     }),
-//   ],
-// })
+// Collection of entities declared in project
+const loadEntities = [User, Role, UserRole];
 
 // TODO: Rework this. Access env to create module TypeORM datasource
 @Module({
@@ -25,17 +15,19 @@ import { User } from 'src/user/entities/user.entity';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get("DATABASE_HOST") || 'localhost',
-        port: configService.get("DATABASE_PORT") || 5432,
-        username: configService.get("DATABASE_USER") || 'postgres',
-        password: configService.get("DATABASE_PWD") || '123',
-        database: configService.get("DATABASE_NAME") || 'herowarudo',
-        entities: [],
+        host: configService.get('DATABASE_HOST') || 'localhost',
+        port: configService.get('DATABASE_PORT') || 5432,
+        username: configService.get('DATABASE_USER') || 'postgres',
+        password: configService.get('DATABASE_PWD') || '123',
+        database: configService.get('DATABASE_NAME') || 'herowarudo',
+        entities: [...loadEntities],
         retryAttempts: 3,
         retryDelay: 10000,
+
+        // For some readson this shit not working
         autoLoadEntities: true, // load entities automatically -> add to entities array
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
 })

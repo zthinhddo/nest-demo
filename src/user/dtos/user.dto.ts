@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Min } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumberString, Min } from "class-validator";
 
 export class CreateUserDto {
 
@@ -14,4 +14,27 @@ export class CreateUserDto {
 
     @IsEmail()
     emlAddr: string;
+}
+
+export class UpdateUserDto {
+    @IsNotEmpty()
+    usrNm: string;
+
+    @Min(6)
+    usrPwd: string;
+
+    @IsEmail()
+    emlAddr: string;
+
+    @IsNumberString()
+    phnNo: string;
+
+    roleId: string;
+
+    @IsNotEmpty()
+    deltFlg: string;
+}
+
+export class CreateUsersDto {
+    createUsers: CreateUserDto[]
 }

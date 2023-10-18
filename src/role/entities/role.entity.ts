@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { UserRole } from "src/usr_role/entities/usr_role.entity";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
-@Entity()
+@Entity({ name: 'role' })
 export class Role {
     @PrimaryColumn({ name: 'role_id', type: 'varchar' })
     roleId: string;
@@ -19,4 +20,8 @@ export class Role {
     updUsrId: string;
     @Column({ name: 'upd_dt', type: 'timestamp' })
     updDt: Date;
+
+    // Add relation many-to-many from ROLE -> USR_ROLE
+    @OneToMany(() => UserRole, (userRole) => userRole.role)
+    userRoles: UserRole[];
 }

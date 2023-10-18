@@ -1,15 +1,16 @@
-import { Module } from '@nestjs/common';
+import { ClassProvider, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { UserService } from './service/user.service';
+import { RoleModule } from 'src/role/role.module';
 import { UserController } from './controller/user.controller';
+import { User } from './entities/user.entity';
 import { USER_SERVICE } from './interfaces/user.interface';
+import { UserService } from './service/user.service';
 
 // Initiate provider items
-const userServiceProvider = { useClass: UserService, provide: USER_SERVICE };
+const userServiceProvider: ClassProvider = { useClass: UserService, provide: USER_SERVICE };
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), RoleModule],
   providers: [userServiceProvider],
   controllers: [UserController],
 

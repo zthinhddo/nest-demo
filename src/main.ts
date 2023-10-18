@@ -6,7 +6,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-
   const port = configService.get('PORT');
 
   // Swagger Configuration
@@ -14,11 +13,11 @@ async function bootstrap() {
     .setTitle('User Management Sample')
     .setDescription('Simple User Management API')
     .setVersion('1.0')
-    .addTag('user')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
+  // Open server port
   await app.listen(port || 3000, () => {
     console.log(`App is running in port ${port}`);
   });

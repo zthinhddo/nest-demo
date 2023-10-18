@@ -7,7 +7,7 @@ import { validateHandler } from './config/validate/env.validate';
 import { UserModule } from './user/user.module';
 import { DatabaseModule } from './database/database.module';
 import { RoleModule } from './role/role.module';
-import { UsrRoleModule } from './usr_role/usr_role.module';
+import { UserRoleModule } from './usr_role/usr_role.module';
 import { DataSource } from 'typeorm';
 
 @Module({
@@ -23,7 +23,7 @@ import { DataSource } from 'typeorm';
     DatabaseModule, 
     UserModule,
     RoleModule,
-    UsrRoleModule,
+    UserRoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
