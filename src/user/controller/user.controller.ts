@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { User } from '../entities/user.entity';
 import { IUser, USER_SERVICE } from '../interfaces/user.interface';
-import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 @ApiTags('user')
 @Controller('users')
@@ -28,4 +28,9 @@ export class UserController {
   getUserById(@Param('usrId') usrId: string): Promise<User | null> {
     return this._userService.getUserById(usrId);
   }
+
+  // @Delete('remove/:userId')
+  // deleteUser(@Param("userId") userId: string) {
+  //   return this._userService.deleteUserOrders(userId);
+  // }
 }

@@ -1,5 +1,5 @@
-import { UserRole } from "src/usr_role/entities/usr_role.entity";
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { UserRole } from "src/usr_role/entities/user_role.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'role' })
 export class Role {
@@ -12,16 +12,16 @@ export class Role {
     @Column({ default: 'N', name: 'delt_flg', type: 'varchar' })
     deltFlg: string;
 
-    @Column({ name: 'cre_usr_id', type: 'varchar' })
-    creUsrId: string;
-    @Column({ name: 'cre_dt', type: 'timestamp' })
+    @CreateDateColumn({ name: 'cre_dt', type: 'timestamp' })
     creDt: Date;
-    @Column({ name: 'upd_usr_id', type: 'varchar' })
-    updUsrId: string;
-    @Column({ name: 'upd_dt', type: 'timestamp' })
+    @UpdateDateColumn({ name: 'upd_dt', type: 'timestamp' })
     updDt: Date;
 
     // Add relation many-to-many from ROLE -> USR_ROLE
-    @OneToMany(() => UserRole, (userRole) => userRole.role)
+    @OneToMany(() => UserRole, (userRole) => userRole.role, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        // eager: true,
+    })
     userRoles: UserRole[];
 }
