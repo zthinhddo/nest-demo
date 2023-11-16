@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from 'src/role/entities/role.entity';
 import { User } from 'src/user/entities/user.entity';
-import { UserRole } from 'src/usr_role/entities/usr_role.entity';
+import { UserRole } from 'src/usr_role/entities/user_role.entity';
 
 // Collection of entities declared in project
 const loadEntities = [User, Role, UserRole];
@@ -20,12 +20,15 @@ const loadEntities = [User, Role, UserRole];
         username: configService.get('DATABASE_USER') || 'postgres',
         password: configService.get('DATABASE_PWD') || '123',
         database: configService.get('DATABASE_NAME') || 'herowarudo',
-        entities: [...loadEntities],
+        entities: [...loadEntities], // ./src/**/*.entities{.ts,.js} */
         retryAttempts: 3,
         retryDelay: 10000,
 
         // For some readson this shit not working
         autoLoadEntities: true, // load entities automatically -> add to entities array
+
+        // Development env only. Disable if use migration
+        synchronize: false, // TODO: logger for synchronize
       }),
       inject: [ConfigService],
     }),

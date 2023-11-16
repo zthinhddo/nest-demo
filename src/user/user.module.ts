@@ -5,12 +5,20 @@ import { UserController } from './controller/user.controller';
 import { User } from './entities/user.entity';
 import { USER_SERVICE } from './interfaces/user.interface';
 import { UserService } from './service/user.service';
+import { UserRole } from 'src/usr_role/entities/user_role.entity';
 
 // Initiate provider items
-const userServiceProvider: ClassProvider = { useClass: UserService, provide: USER_SERVICE };
+const userServiceProvider: ClassProvider = {
+  useClass: UserService,
+  provide: USER_SERVICE,
+};
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), RoleModule],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserRole]),
+    RoleModule,
+  ],
   providers: [userServiceProvider],
   controllers: [UserController],
 

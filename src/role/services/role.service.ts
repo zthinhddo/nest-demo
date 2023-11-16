@@ -24,6 +24,6 @@ export class RoleService implements IRole {
   }
 
   async getRoles(): Promise<Role[]> {
-    return this.roleRepository.find();
+    return this.roleRepository.find({ relations: ["userRoles"] });
   }
 }

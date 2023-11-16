@@ -17,7 +17,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm:cli": "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "migrate:create": "npm run typeorm:cli migration:create",
+    "migrate:generate": "npm run typeorm:cli migration:generate -- --dataSource ./src/datasource/data-source.ts ./src/migration/appMigration",
+    "migrate:generate-option": "npm run typeorm:cli migration:generate -- --dataSource ./src/datasource/data-source.ts",
+    "migrate:run": "npm run typeorm:cli migration:run -- -d ./src/datasource/data-source.ts",
+    "migrate:revert": "npm run typeorm:cli migration:revert"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.1.0",
